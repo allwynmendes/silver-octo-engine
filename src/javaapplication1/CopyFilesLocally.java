@@ -25,7 +25,6 @@ public class CopyFilesLocally{
     File source;
     File target;
     CreateReport cr1 = new CreateReport();
-    Map<String, String> file_status = new HashMap<String, String>();
     
     void readFiles(LinkedList<String> urls) throws IOException, Exception{
         String url;
@@ -60,9 +59,6 @@ public class CopyFilesLocally{
                     break;
             }
         }
-        for(Map.Entry m:file_status.entrySet()){  
-            System.out.println(m.getKey()+" "+m.getValue());  
-        }  
     }
     
     int scanForProtocol(String urlStr){

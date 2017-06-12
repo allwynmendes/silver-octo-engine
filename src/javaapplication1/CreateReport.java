@@ -10,10 +10,19 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CreateReport{
-    void createCsv() throws FileNotFoundException{
-        PrintWriter pw = new PrintWriter(new File("C:\\Users\\inrp10181\\Documents\\JavaApplication1\\report.csv"));
+    void createCsv(){
+        PrintWriter pw = null;
+        try {
+            pw = new PrintWriter(new File("C:\\Users\\inrp10181\\Documents\\JavaApplication1\\report.csv"));
+        } catch (FileNotFoundException ex) {
+            System.out.println("report.csv file is being accessed by another application");
+            System.out.println("Kindly close application and run program again.");
+            System.exit(0);
+        }
         StringBuilder sb = new StringBuilder();
         sb.append("URL");
         sb.append(',');
