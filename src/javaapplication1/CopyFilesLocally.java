@@ -18,11 +18,15 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CopyFilesLocally{
     File source;
     File target;
     CreateReport cr1 = new CreateReport();
+    Map<String, String> file_status = new HashMap<String, String>();
+    
     void readFiles(LinkedList<String> urls) throws IOException, Exception{
         String url;
         Double fileSize;
@@ -117,9 +121,14 @@ public class CopyFilesLocally{
         return bytes;
     }
     
-    void downloadFiles(String url, String file) throws IOException{
+    void downloadFiles(String url, String file){
         target = new File("C:\\Users\\inrp10181\\Documents\\JavaApplication1\\target\\" + file);
         source = new File(url+"\\"+file);
-        Files.copy(source.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        try {
+            Files.copy(source.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            file_status.put(url+"\\"+file, "Success");
+        } catch (IOException ex) {
+            file_status.put(url+"\\"+file, ex.toString());
+        }
     }
 }

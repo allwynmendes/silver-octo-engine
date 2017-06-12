@@ -14,11 +14,10 @@ public class JavaApplication1 {
     
     static String FILENAME = "C:\\Users\\inrp10181\\Documents\\JavaApplication1\\files_list.txt";
     static CopyFilesLocally cfl1 = new CopyFilesLocally();
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = null;
         FileReader fr = null;
         LinkedList<String> files = new LinkedList<String>();
-        try{
             fr = new FileReader(FILENAME);
             br = new BufferedReader(fr);
             String sCurrentLine;
@@ -29,9 +28,5 @@ public class JavaApplication1 {
                 files.add(sCurrentLine);
             }
             cfl1.readFiles(files);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }   
     }
 }
