@@ -32,6 +32,7 @@ public class CopyFilesLocally{
         Double fileSize;
         String timeStamp_start;
         String timeStamp_end;
+        String status = null;
         Iterator<String> itr = urls.iterator();
         int protocolType;
         cr1.createCsv();
@@ -43,10 +44,10 @@ public class CopyFilesLocally{
                     System.out.println(getUrl(url));
                     System.out.println(getFileName(url));
                     timeStamp_start = new SimpleDateFormat("ddMMyyyy_HHmmss").format(Calendar.getInstance().getTime());
-                    downloadFiles(getUrl(url), getFileName(url));
+                    status = downloadFiles(url, getUrl(url), getFileName(url));
                     timeStamp_end = new SimpleDateFormat("ddMMyyyy_HHmmss").format(Calendar.getInstance().getTime());
                     fileSize = getFileSize(url);
-                    cr1.addToCsv(getUrl(url),getFileName(url), timeStamp_start, timeStamp_end, fileSize, protocolType);
+                    cr1.addToCsv(getUrl(url),getFileName(url), timeStamp_start, timeStamp_end, fileSize, protocolType, status);
                     break;
                 case 1:
                     System.out.println(getWebUrl(url));
@@ -55,10 +56,13 @@ public class CopyFilesLocally{
                     downloadWebFile(url);
                     timeStamp_end = new SimpleDateFormat("ddMMyyyy_HHmmss").format(Calendar.getInstance().getTime());
                     fileSize = getFileSize("C:\\Users\\inrp10181\\Documents\\JavaApplication1\\target\\"+getWebFileName(url));
-                    cr1.addToCsv(getWebUrl(url),getWebFileName(url), timeStamp_start, timeStamp_end, fileSize, protocolType);
+                    cr1.addToCsv(getWebUrl(url),getWebFileName(url), timeStamp_start, timeStamp_end, fileSize, protocolType, status);
                     break;
             }
         }
+        for(Map.Entry m:file_status.entrySet()){  
+            System.out.println(m.getKey()+" "+m.getValue());  
+        }  
     }
     
     int scanForProtocol(String urlStr){
@@ -121,14 +125,14 @@ public class CopyFilesLocally{
         return bytes;
     }
     
-    void downloadFiles(String url, String file){
+    String downloadFiles(String urlStr, String url, String file){
         target = new File("C:\\Users\\inrp10181\\Documents\\JavaApplication1\\target\\" + file);
         source = new File(url+"\\"+file);
         try {
             Files.copy(source.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
-            file_status.put(url+"\\"+file, "Success");
+            return "SUCCESS";
         } catch (IOException ex) {
-            file_status.put(url+"\\"+file, ex.toString());
+            return "FAILED : " + ex.toString();
         }
     }
 }

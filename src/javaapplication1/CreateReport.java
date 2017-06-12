@@ -26,12 +26,14 @@ public class CreateReport{
         sb.append("FSize(KB)");
         sb.append(',');
         sb.append("DL_From");
+        sb.append(',');
+        sb.append("Status");
         sb.append('\n');
         pw.write(sb.toString());
         pw.close();
     }
     
-    void addToCsv(String url, String fileName, String dST, String dED, Double fileSize, int protocolType) throws FileNotFoundException{
+    void addToCsv(String url, String fileName, String dST, String dED, Double fileSize, int protocolType, String status) throws FileNotFoundException{
         PrintWriter pw = new PrintWriter(new FileOutputStream("C:\\Users\\inrp10181\\Documents\\JavaApplication1\\report.csv", true));
         StringBuilder sb = new StringBuilder();
         sb.append(url);
@@ -55,6 +57,8 @@ public class CreateReport{
                 sb.append("OTHER");
                 break;
         }
+        sb.append(',');
+        sb.append(status);
         sb.append('\n');
         pw.append(sb.toString());
         pw.close();
