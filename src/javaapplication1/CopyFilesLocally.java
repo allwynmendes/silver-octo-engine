@@ -8,6 +8,7 @@ package javaapplication1;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,11 +19,14 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CopyFilesLocally{
     File source;
     File target;
     CreateReport cr1 = new CreateReport();
+    static LogGenerator lg1 = new LogGenerator();
     void readFiles(LinkedList<String> urls) throws IOException, Exception{
         String url;
         Double fileSize;
@@ -117,9 +121,14 @@ public class CopyFilesLocally{
         return bytes;
     }
     
-    void downloadFiles(String url, String file) throws IOException{
+    void downloadFiles(String url, String file) throws FileNotFoundException{
+        String fullPath = url+"\\"+file;
         target = new File("C:\\Users\\inrp10181\\Documents\\JavaApplication1\\target\\" + file);
-        source = new File(url+"\\"+file);
-        Files.copy(source.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        source = new File(fullPath);
+        try {
+            Files.copy(source.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException ex) {
+            lg1.createLog("File Does Not Exist (" + fullPath +") - Not Copied");
+        }
     }
 }

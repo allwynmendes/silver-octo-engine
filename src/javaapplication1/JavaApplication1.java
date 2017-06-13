@@ -14,7 +14,11 @@ public class JavaApplication1 {
     
     static String FILENAME = "C:\\Users\\inrp10181\\Documents\\JavaApplication1\\files_list.txt";
     static CopyFilesLocally cfl1 = new CopyFilesLocally();
-    public static void main(String[] args) {
+    //static GmailClass gc1 = new GmailClass();
+    static LogGenerator lg1 = new LogGenerator();
+    public static void main(String[] args) throws IOException {
+        //gc1.mainFunction();
+        lg1.createLog("Program Start");
         BufferedReader br = null;
         FileReader fr = null;
         LinkedList<String> files = new LinkedList<String>();
@@ -31,7 +35,10 @@ public class JavaApplication1 {
             cfl1.readFiles(files);
         }
         catch(Exception e){
-            e.printStackTrace();
+            //e.printStackTrace();
+            lg1.createLog("file_list.txt not found in required directory.");
+            System.out.println("file_list.txt not found in required directory.");
         }   
+        lg1.createLog("Program End");
     }
 }
