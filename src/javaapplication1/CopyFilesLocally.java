@@ -32,6 +32,7 @@ public class CopyFilesLocally{
         Double fileSize;
         String timeStamp_start;
         String timeStamp_end;
+        String status = null;
         Iterator<String> itr = urls.iterator();
         int protocolType;
         cr1.createCsv();
@@ -43,19 +44,19 @@ public class CopyFilesLocally{
                     System.out.println(getUrl(url));
                     System.out.println(getFileName(url));
                     timeStamp_start = new SimpleDateFormat("ddMMyyyy_HHmmss").format(Calendar.getInstance().getTime());
-                    downloadFiles(getUrl(url), getFileName(url));
+                    status = downloadFiles(getUrl(url), getFileName(url));
                     timeStamp_end = new SimpleDateFormat("ddMMyyyy_HHmmss").format(Calendar.getInstance().getTime());
                     fileSize = getFileSize(url);
-                    cr1.addToCsv(getUrl(url),getFileName(url), timeStamp_start, timeStamp_end, fileSize, protocolType);
+                    cr1.addToCsv(getUrl(url),getFileName(url), timeStamp_start, timeStamp_end, fileSize, protocolType, status);
                     break;
                 case 1:
                     System.out.println(getWebUrl(url));
                     System.out.println(getWebFileName(url));
                     timeStamp_start = new SimpleDateFormat("ddMMyyyy_HHmmss").format(Calendar.getInstance().getTime());
-                    downloadWebFile(url);
+                    status = downloadWebFile(url);
                     timeStamp_end = new SimpleDateFormat("ddMMyyyy_HHmmss").format(Calendar.getInstance().getTime());
                     fileSize = getFileSize("C:\\Users\\inrp10181\\Documents\\JavaApplication1\\target\\"+getWebFileName(url));
-                    cr1.addToCsv(getWebUrl(url),getWebFileName(url), timeStamp_start, timeStamp_end, fileSize, protocolType);
+                    cr1.addToCsv(getWebUrl(url),getWebFileName(url), timeStamp_start, timeStamp_end, fileSize, protocolType, status);
                     break;
             }
         }
@@ -86,7 +87,7 @@ public class CopyFilesLocally{
         return fileName;
     }
     
-    void downloadWebFile(String urlStr) throws Exception{
+    String downloadWebFile(String urlStr) throws Exception{
         URL url = new URL(urlStr);
         InputStream in = new BufferedInputStream(url.openStream());
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -101,6 +102,7 @@ public class CopyFilesLocally{
         FileOutputStream fos = new FileOutputStream("C:\\Users\\inrp10181\\Documents\\JavaApplication1\\target\\"+getWebFileName(urlStr));
         fos.write(response);
         fos.close();
+        return "SUCCESS(W)";
     }
     
     String getUrl(String urlStr){
@@ -121,14 +123,17 @@ public class CopyFilesLocally{
         return bytes;
     }
     
-    void downloadFiles(String url, String file) throws FileNotFoundException{
+
+    String downloadFiles(String url, String file) throws FileNotFoundException{
         String fullPath = url+"\\"+file;
         target = new File("C:\\Users\\inrp10181\\Documents\\JavaApplication1\\target\\" + file);
         source = new File(fullPath);
         try {
             Files.copy(source.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            return "SUCCESS";
         } catch (IOException ex) {
             lg1.createLog("File Does Not Exist (" + fullPath +") - Not Copied");
+            return "FAILED : " + ex.toString();
         }
     }
 }

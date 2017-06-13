@@ -33,12 +33,12 @@ public class JavaApplication1 {
                 files.add(sCurrentLine);
             }
             cfl1.readFiles(files);
-        }
-        catch(Exception e){
+        }catch(Exception e){
             //e.printStackTrace();
             lg1.createLog("file_list.txt not found in required directory.");
             System.out.println("file_list.txt not found in required directory.");
         }   
         lg1.createLog("Program End");
+
     }
 }
