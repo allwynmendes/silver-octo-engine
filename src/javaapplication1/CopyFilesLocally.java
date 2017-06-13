@@ -5,6 +5,7 @@
  */
 package javaapplication1;
 
+import com.google.common.collect.Iterators;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -30,36 +31,39 @@ public class CopyFilesLocally{
     void readFiles(LinkedList<String> urls) throws IOException, Exception{
         String url;
         Double fileSize;
-        String timeStamp_start;
-        String timeStamp_end;
+        String timeStamp_start = null;
+        String timeStamp_end = null;
         String status = null;
+        int count = 0;
         Iterator<String> itr = urls.iterator();
         int protocolType;
         cr1.createCsv();
         while(itr.hasNext()){
             url = itr.next();
             protocolType = scanForProtocol(url);
+            
+            timeStamp_start = new SimpleDateFormat("dd/MM/yyyy_HH:mm:ss").format(Calendar.getInstance().getTime());
             switch(protocolType){
                 case 0:
                     System.out.println(getUrl(url));
                     System.out.println(getFileName(url));
-                    timeStamp_start = new SimpleDateFormat("ddMMyyyy_HHmmss").format(Calendar.getInstance().getTime());
                     status = downloadFiles(getUrl(url), getFileName(url));
-                    timeStamp_end = new SimpleDateFormat("ddMMyyyy_HHmmss").format(Calendar.getInstance().getTime());
+                    timeStamp_end = new SimpleDateFormat("dd/MM/yyyy_HH:mm:ss").format(Calendar.getInstance().getTime());
                     fileSize = getFileSize(url);
                     cr1.addToCsv(getUrl(url),getFileName(url), timeStamp_start, timeStamp_end, fileSize, protocolType, status);
                     break;
                 case 1:
                     System.out.println(getWebUrl(url));
                     System.out.println(getWebFileName(url));
-                    timeStamp_start = new SimpleDateFormat("ddMMyyyy_HHmmss").format(Calendar.getInstance().getTime());
                     status = downloadWebFile(url);
-                    timeStamp_end = new SimpleDateFormat("ddMMyyyy_HHmmss").format(Calendar.getInstance().getTime());
+                    timeStamp_end = new SimpleDateFormat("dd/MM/yyyy_HH:mm:ss").format(Calendar.getInstance().getTime());
                     fileSize = getFileSize("C:\\Users\\inrp10181\\Documents\\JavaApplication1\\target\\"+getWebFileName(url));
                     cr1.addToCsv(getWebUrl(url),getWebFileName(url), timeStamp_start, timeStamp_end, fileSize, protocolType, status);
                     break;
             }
+            count++;
         }
+        cr1.totalDownloadSize(count);
     }
     
     int scanForProtocol(String urlStr){

@@ -75,4 +75,15 @@ public class CreateReport{
         pw.append(sb.toString());
         pw.close();
     }
+
+    void totalDownloadSize(int listLength) throws FileNotFoundException{
+        PrintWriter pw = new PrintWriter(new FileOutputStream("C:\\Users\\inrp10181\\Documents\\JavaApplication1\\report.csv", true));
+        StringBuilder sb = new StringBuilder();
+        sb.append("Downloaded (KB) : ");
+        sb.append(',');
+        sb.append("=SUM(E2:E"+listLength+2+")");
+        sb.append('\n');
+        pw.append(sb.toString());
+        pw.close();
+    }
 }
