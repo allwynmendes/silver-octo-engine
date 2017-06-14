@@ -33,6 +33,10 @@ public class CopyFilesLocally{
         Double fileSize;
         String timeStamp_start = null;
         String timeStamp_end = null;
+            String time_start = null;
+            String time_end = null;
+            String date_start = null;
+            String date_end = null;
         String status = null;
         int count = 0;
         Iterator<String> itr = urls.iterator();
@@ -42,23 +46,26 @@ public class CopyFilesLocally{
             url = itr.next();
             protocolType = scanForProtocol(url);
             
-            timeStamp_start = new SimpleDateFormat("dd/MM/yyyy_HH:mm:ss").format(Calendar.getInstance().getTime());
+            time_start = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+            date_start = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
             switch(protocolType){
                 case 0:
                     System.out.println(getUrl(url));
                     System.out.println(getFileName(url));
                     status = downloadFiles(getUrl(url), getFileName(url));
-                    timeStamp_end = new SimpleDateFormat("dd/MM/yyyy_HH:mm:ss").format(Calendar.getInstance().getTime());
+                    time_end = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+                    date_end = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
                     fileSize = getFileSize(url);
-                    cr1.addToCsv(getUrl(url),getFileName(url), timeStamp_start, timeStamp_end, fileSize, protocolType, status);
+                    cr1.addToCsv(getUrl(url),getFileName(url), date_start, date_end, time_start, time_end, fileSize, protocolType, status);
                     break;
                 case 1:
                     System.out.println(getWebUrl(url));
                     System.out.println(getWebFileName(url));
                     status = downloadWebFile(url);
-                    timeStamp_end = new SimpleDateFormat("dd/MM/yyyy_HH:mm:ss").format(Calendar.getInstance().getTime());
+                    time_end = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+                    date_end = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
                     fileSize = getFileSize("C:\\Users\\inrp10181\\Documents\\JavaApplication1\\target\\"+getWebFileName(url));
-                    cr1.addToCsv(getWebUrl(url),getWebFileName(url), timeStamp_start, timeStamp_end, fileSize, protocolType, status);
+                    cr1.addToCsv(getWebUrl(url),getWebFileName(url), date_start, date_end, time_start, time_end, fileSize, protocolType, status);
                     break;
             }
             count++;
@@ -134,9 +141,10 @@ public class CopyFilesLocally{
         source = new File(fullPath);
         try {
             Files.copy(source.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            lg1.createLog("File Downloaded - " + fullPath);
             return "SUCCESS";
         } catch (IOException ex) {
-            lg1.createLog("File Does Not Exist (" + fullPath +") - Not Copied");
+            lg1.createLog("File Does Not Exist (" + fullPath +") - Not Downloadeds");
             return "FAILED : " + ex.toString();
         }
     }

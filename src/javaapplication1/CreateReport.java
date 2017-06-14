@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 
 public class CreateReport{
     static LogGenerator lg1 = new LogGenerator();
+    static int counter = 2;
     void createCsv() throws FileNotFoundException{
         PrintWriter pw = null;
         try {
@@ -27,6 +28,12 @@ public class CreateReport{
             sb.append("DST");
             sb.append(',');
             sb.append("DED");
+            sb.append(',');
+            sb.append("TST");
+            sb.append(',');
+            sb.append("TED");
+            sb.append(',');
+            sb.append("ETA");
             sb.append(',');
             sb.append("FSize(KB)");
             sb.append(',');
@@ -45,7 +52,7 @@ public class CreateReport{
         }
     }
     
-    void addToCsv(String url, String fileName, String dST, String dED, Double fileSize, int protocolType, String status) throws FileNotFoundException{
+    void addToCsv(String url, String fileName, String dST, String dED, String tST, String tED, Double fileSize, int protocolType, String status) throws FileNotFoundException{
         PrintWriter pw = new PrintWriter(new FileOutputStream("C:\\Users\\inrp10181\\Documents\\JavaApplication1\\report.csv", true));
         StringBuilder sb = new StringBuilder();
         sb.append(url);
@@ -55,6 +62,12 @@ public class CreateReport{
         sb.append(dST);
         sb.append(',');
         sb.append(dED);
+        sb.append(',');
+        sb.append(tST);
+        sb.append(',');
+        sb.append(tED);
+        sb.append(',');
+        sb.append("=F"+counter+"-E"+counter);   counter++;
         sb.append(',');
         sb.append(fileSize/1024);
         sb.append(',');
@@ -81,7 +94,7 @@ public class CreateReport{
         StringBuilder sb = new StringBuilder();
         sb.append("Downloaded (KB) : ");
         sb.append(',');
-        sb.append("=SUM(E2:E"+listLength+2+")");
+        sb.append("=SUM(H2:H"+listLength+2+")");
         sb.append('\n');
         pw.append(sb.toString());
         pw.close();
