@@ -14,12 +14,22 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CreateReport{
-    static LogGenerator lg1 = new LogGenerator();
+    
+    String REPORT = null;
+    static String LOG = null;
+    CreateReport(String REPORT, String LOG){
+        this.REPORT = REPORT;
+        this.LOG = LOG;
+        System.out.println("Here is " + LOG);
+    }
+    
+    static LogGenerator lg1 = new LogGenerator(JavaApplication1.LOG);
     static int counter = 2;
     void createCsv() throws FileNotFoundException{
         PrintWriter pw = null;
+        System.out.println("Here is " + REPORT);
         try {
-            pw = new PrintWriter(new File("C:\\Users\\inrp10181\\Documents\\JavaApplication1\\report.csv"));
+            pw = new PrintWriter(new File(REPORT));
             StringBuilder sb = new StringBuilder();
             sb.append("URL");
             sb.append(',');
@@ -53,7 +63,7 @@ public class CreateReport{
     }
     
     void addToCsv(String url, String fileName, String dST, String dED, String tST, String tED, Double fileSize, int protocolType, String status) throws FileNotFoundException{
-        PrintWriter pw = new PrintWriter(new FileOutputStream("C:\\Users\\inrp10181\\Documents\\JavaApplication1\\report.csv", true));
+        PrintWriter pw = new PrintWriter(new FileOutputStream(REPORT, true));
         StringBuilder sb = new StringBuilder();
         sb.append(url);
         sb.append(',');
@@ -90,7 +100,7 @@ public class CreateReport{
     }
 
     void totalDownloadSize(int listLength) throws FileNotFoundException{
-        PrintWriter pw = new PrintWriter(new FileOutputStream("C:\\Users\\inrp10181\\Documents\\JavaApplication1\\report.csv", true));
+        PrintWriter pw = new PrintWriter(new FileOutputStream(REPORT, true));
         StringBuilder sb = new StringBuilder();
         sb.append("Downloaded (KB) : ");
         sb.append(',');

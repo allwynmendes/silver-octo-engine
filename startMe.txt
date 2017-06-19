@@ -1,0 +1,4 @@
+C:\\Users\\inrp10181\\Documents\\JavaApplication1\\files_list.txt
+C:\\Users\\inrp10181\\Documents\\JavaApplication1\\report.csv
+C:\\Users\\inrp10181\\Documents\\JavaApplication1\\log.txt
+C:\\Users\\inrp10181\\Desktop\\target\\

@@ -24,11 +24,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CopyFilesLocally{
+    static String REPORT, LOG, TARGET;
+    CopyFilesLocally(String REPORT, String LOG, String TARGET){
+        this.REPORT = REPORT;
+        this.LOG = LOG;
+        this.TARGET = TARGET;
+    }
+    
     File source;
     File target;
-    CreateReport cr1 = new CreateReport();
-    static LogGenerator lg1 = new LogGenerator();
+    CreateReport cr1 = new CreateReport(JavaApplication1.REPORT, JavaApplication1.LOG);
+    static LogGenerator lg1 = new LogGenerator(LOG);
     void readFiles(LinkedList<String> urls) throws IOException, Exception{
+        System.out.println("hi" + REPORT);
         String url;
         Double fileSize;
         String timeStamp_start = null;
@@ -64,7 +72,7 @@ public class CopyFilesLocally{
                     status = downloadWebFile(url);
                     time_end = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
                     date_end = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
-                    fileSize = getFileSize("C:\\Users\\inrp10181\\Documents\\JavaApplication1\\target\\"+getWebFileName(url));
+                    fileSize = getFileSize(TARGET+getWebFileName(url));
                     cr1.addToCsv(getWebUrl(url),getWebFileName(url), date_start, date_end, time_start, time_end, fileSize, protocolType, status);
                     break;
             }
@@ -110,7 +118,7 @@ public class CopyFilesLocally{
         out.close();
         in.close();
         byte[] response = out.toByteArray();
-        FileOutputStream fos = new FileOutputStream("C:\\Users\\inrp10181\\Documents\\JavaApplication1\\target\\"+getWebFileName(urlStr));
+        FileOutputStream fos = new FileOutputStream(TARGET+getWebFileName(urlStr));
         fos.write(response);
         fos.close();
         return "SUCCESS(W)";
@@ -137,7 +145,7 @@ public class CopyFilesLocally{
 
     String downloadFiles(String url, String file) throws FileNotFoundException{
         String fullPath = url+"\\"+file;
-        target = new File("C:\\Users\\inrp10181\\Documents\\JavaApplication1\\target\\" + file);
+        target = new File(TARGET + file);
         source = new File(fullPath);
         try {
             Files.copy(source.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);

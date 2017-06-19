@@ -16,9 +16,14 @@ import java.util.Calendar;
 
 public class LogGenerator {
     
+    static String LOG = null;
+    LogGenerator(String LOG){
+        this.LOG = LOG;
+    }
+    
     void createLog(String logMessage) throws FileNotFoundException{
         String timeStamp;
-        PrintWriter pw = new PrintWriter(new FileOutputStream("C:\\Users\\inrp10181\\Documents\\JavaApplication1\\log.txt", true));
+        PrintWriter pw = new PrintWriter(new FileOutputStream(LOG, true));
         StringBuilder sb = new StringBuilder();
         timeStamp = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss").format(Calendar.getInstance().getTime());
         sb.append(timeStamp + " ---> " + logMessage);
