@@ -5,7 +5,6 @@
  */
 package javaapplication1;
 
-import com.google.common.collect.Iterators;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
