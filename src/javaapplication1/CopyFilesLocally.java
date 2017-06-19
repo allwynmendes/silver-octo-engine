@@ -35,7 +35,6 @@ public class CopyFilesLocally{
     CreateReport cr1 = new CreateReport(JavaApplication1.REPORT, JavaApplication1.LOG);
     static LogGenerator lg1 = new LogGenerator(LOG);
     void readFiles(LinkedList<String> urls) throws IOException, Exception{
-        System.out.println("hi" + REPORT);
         String url;
         Double fileSize;
         String timeStamp_start = null;

@@ -18,6 +18,8 @@ public class JavaApplication1 {
     static String TARGET = null;
     
     static void readStartMe(){
+        System.out.println("Working Directory = " +
+              System.getProperty("user.dir"));
         int loopNumber = 1;
         BufferedReader br = null;
         FileReader fr = null;

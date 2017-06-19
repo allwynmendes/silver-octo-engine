@@ -20,14 +20,12 @@ public class CreateReport{
     CreateReport(String REPORT, String LOG){
         this.REPORT = REPORT;
         this.LOG = LOG;
-        System.out.println("Here is " + LOG);
     }
     
     static LogGenerator lg1 = new LogGenerator(JavaApplication1.LOG);
     static int counter = 2;
     void createCsv() throws FileNotFoundException{
         PrintWriter pw = null;
-        System.out.println("Here is " + REPORT);
         try {
             pw = new PrintWriter(new File(REPORT));
             StringBuilder sb = new StringBuilder();
