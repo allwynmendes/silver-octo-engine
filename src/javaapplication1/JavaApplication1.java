@@ -59,9 +59,19 @@ public class JavaApplication1 {
             }
         }
         catch(Exception e){
-            
+            //e.printStackTrace();
+            System.out.println("\n***************INCOGNITO***************\n"
+                    + "Hi There,\n"
+                    + "Insert file 'startMe.txt' in the montioned working directory\n"
+                    + "with the following path format : \n"
+                    + " Line 1 : files_list.txt\n"
+                    + " Line 2 : report.csv\n"
+                    + " Line 3 : log.txt\n"
+                    + " Line 4 : Target Folder\n"
+                    + "For Any Queries contact Administrator at 8888-788-338"
+                    + "\n***************************************");
+            System.exit(0);
         }
-        //System.exit(0);
     }
     
     public static void main(String[] args) throws IOException {
